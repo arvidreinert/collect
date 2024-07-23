@@ -96,7 +96,7 @@ class game():
         pressed = False
         while pressed == False:
             screen.fill((250,250,250))
-            self.text_surface = self.my_font.render(f"your score was {self.score} click to retry", False, (0, 0, 0))
+            self.text_surface = self.my_font.render(f"your score is {self.score} click to retry", False, (0, 0, 0))
             screen.blit(self.text_surface, (500,height/2))
             pygame.display.update()
             for event in pygame.event.get():
