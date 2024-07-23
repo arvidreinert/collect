@@ -8,6 +8,9 @@ class game():
         self.actual_color = self.make_random_base_color()
         self.gravity = 5
         self.color_rect = Rectangle((100,100),(width/2,height-120),self.actual_color,False)
+        self.my_font = pygame.font.SysFont('Rage Italic', 100)
+        self.text_surface = self.my_font.render(str(self.score), False, (0, 0, 0))
+
 
     def make_random_base_color(self):
         color = [0,0,0]
@@ -40,11 +43,13 @@ class game():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     pass
 
-            screen.fill((0,0,0))
+            screen.fill((250,250,250))
             #rects.update(screen)
-            self.color_rect.update(screen)
             for rect in self.color_rects:
                 rect.update(screen)
+            self.text_surface = self.my_font.render(f"{str(self.score)}", False, (0, 0, 0))
+            screen.blit(self.text_surface, (width/2,120))
+            self.color_rect.update(screen)
             pygame.display.update()
 
 x = game()
