@@ -25,6 +25,10 @@ class game():
     def run_game(self):
         counter = 0
         while self.running:
+            if pygame.mixer.Channel(1).get_busy() == False:
+                pygame.mixer.Channel(1).play(pygame.mixer.Sound("sound.mp3"))
+                pygame.mixer.Channel(1).set_volume(1)
+
             clock.tick(30)
             #spawning rects
             if counter <= 50:
@@ -67,6 +71,8 @@ class game():
                     for rect in self.color_rects:
                         if rect.get_point_collide(mous_pos) and rect.get_color() == self.actual_color:
                             self.score += 1
+                            pygame.mixer.Channel(0).play(pygame.mixer.Sound("yoink.mp3"))
+                            pygame.mixer.Channel(0).set_volume(2)
                             rect.kill()
                             del self.color_rects[x]
                         x += 1

@@ -3,6 +3,7 @@ from screeninfo import get_monitors
 import pygame, sys,random, math
 
 #initialyse the module:
+pygame.mixer.init()
 pygame.init()
 pygame.joystick.init()
 my_screens = get_monitors()
