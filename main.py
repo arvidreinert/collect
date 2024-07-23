@@ -2,12 +2,14 @@ from rectangle import *
 from setup import *
 class game():
     def __init__(self):
+        pygame.display.set_caption("dodge the block")
         self.running = True
         self.score = 0
         self.color_rects = []
         self.actual_color = self.make_random_base_color()
         self.gravity = 2
         self.color_rect = Rectangle((400,100),(width/2,height-120),self.actual_color,False)
+        pygame.display.set_icon(self.color_rect.load_costums(["icon.png"])["icon.png"])
         self.my_font = pygame.font.SysFont('Rage Italic', 100)
         self.text_surface = self.my_font.render(str(self.score), False, (0, 0, 0))
 
@@ -64,10 +66,13 @@ class game():
                     if self.color_rect.get_point_collide(mous_pos):
                         if self.score >= 1:
                             self.score -= 1
-                            self.actual_color = self.make_random_base_color()
+                            x = self.make_random_base_color()
+                            while x == self.actual_color:
+                                x = self.make_random_base_color()
+                            self.actual_color = x
                             self.color_rect.fill_rect_with_color(self.actual_color)
                             pygame.mixer.Channel(0).play(pygame.mixer.Sound("teleport.mp3"))
-                            pygame.mixer.Channel(0).set_volume(3)
+                            pygame.mixer.Channel(0).set_volume(30)
                     x = 0
                     for rect in self.color_rects:
                         if rect.get_point_collide(mous_pos) and rect.get_color() == self.actual_color:
