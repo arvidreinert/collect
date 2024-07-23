@@ -29,6 +29,9 @@ class Rectangle():
         self.color = color
         self.rect = self.original_rect.copy()
         
+    def get_color(self):
+        return self.color
+    
     def update(self, surface):
         if self.is_updating:
             if self.image_path != False:

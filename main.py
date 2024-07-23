@@ -47,6 +47,7 @@ class game():
             #rects.update(screen)
             for rect in self.color_rects:
                 rect.update(screen)
+                print(rect.get_colorkey())
             self.text_surface = self.my_font.render(f"{str(self.score)}", False, (0, 0, 0))
             screen.blit(self.text_surface, (width/2,120))
             self.color_rect.update(screen)
