@@ -6,7 +6,8 @@ class game():
         self.score = 0
         self.color_rects = []
         self.actual_color = self.make_random_base_color()
-        self.color_rect = Rectangle((width/10,height/5),(width/2,height/2),self.actual_color,False)
+        self.gravity = 5
+        self.color_rect = Rectangle((100,100),(width/2,height-120),self.actual_color,False)
 
     def make_random_base_color(self):
         color = [0,0,0]
@@ -15,21 +16,22 @@ class game():
 
     def spawn_random_color_rect(self):
         color = self.make_random_base_color()
-        color_rect = Rectangle((width/10,height/5),(random.randint(0, width),0),color,False)
+        color_rect = Rectangle((75,75),(random.randint(0, width),0),color,False)
         self.color_rects.append(color_rect)
 
     def run_game(self):
         counter = 0
         while self.running:
-            print(True)
             clock.tick(30)
             #spawning rects
-            if counter <= 22:
+            if counter <= 50-self.score:
                 counter += 1
-            if counter == 23:
-                for i in range(1,5):
+            if counter == 50-self.score:
+                for i in range(0,1+self.score):
                     self.spawn_random_color_rect()
                 counter = 0
+            for rect in self.color_rects:
+                rect.change_position(0,self.gravity)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -41,4 +43,9 @@ class game():
             screen.fill((0,0,0))
             #rects.update(screen)
             self.color_rect.update(screen)
+            for rect in self.color_rects:
+                rect.update(screen)
             pygame.display.update()
+
+x = game()
+x.run_game()
