@@ -6,8 +6,8 @@ class game():
         self.score = 0
         self.color_rects = []
         self.actual_color = self.make_random_base_color()
-        self.gravity = 5
-        self.color_rect = Rectangle((100,100),(width/2,height-120),self.actual_color,False)
+        self.gravity = 2
+        self.color_rect = Rectangle((400,100),(width/2,height-120),self.actual_color,False)
         self.my_font = pygame.font.SysFont('Rage Italic', 100)
         self.text_surface = self.my_font.render(str(self.score), False, (0, 0, 0))
 
@@ -30,12 +30,12 @@ class game():
             if counter <= 50:
                 counter += 1
             if counter == 50:
-                if self.score <= 10:
+                if self.score <= 3:
                     for i in range(0,1+self.score):
                         self.spawn_random_color_rect()
                     counter = 0
                 else:
-                    for i in range(0,10):
+                    for i in range(1,3):
                         self.spawn_random_color_rect()
                     counter = 0
             x = 0
@@ -55,6 +55,11 @@ class game():
                     sys.exit()
                 #here ia the button
                 if event.type == pygame.MOUSEBUTTONDOWN:
+                    if self.color_rect.get_point_collide(mous_pos):
+                        if self.score >= 1:
+                            self.score -= 1
+                            self.actual_color = self.make_random_base_color()
+                            self.color_rect.fill_rect_with_color(self.actual_color)
                     x = 0
                     for rect in self.color_rects:
                         if rect.get_point_collide(mous_pos) and rect.get_color() == self.actual_color:
