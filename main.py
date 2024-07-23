@@ -27,27 +27,46 @@ class game():
         while self.running:
             clock.tick(30)
             #spawning rects
-            if counter <= 50-self.score:
+            if counter <= 50:
                 counter += 1
-            if counter == 50-self.score:
-                for i in range(0,1+self.score):
-                    self.spawn_random_color_rect()
-                counter = 0
+            if counter == 50:
+                if self.score <= 10:
+                    for i in range(0,1+self.score):
+                        self.spawn_random_color_rect()
+                    counter = 0
+                else:
+                    for i in range(0,10):
+                        self.spawn_random_color_rect()
+                    counter = 0
+            x = 0
             for rect in self.color_rects:
-                rect.change_position(0,self.gravity)
+                if rect.get_pos()[1] <= height:
+                    rect.change_position(0,self.gravity)
+                else:
+                    rect.kill()
+                    del self.color_rects[x]
+                    if self.score >= 5:
+                        self.score -= 1
+                x += 1
 
+            mous_pos = pygame.mouse.get_pos()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
                 #here ia the button
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    pass
+                    x = 0
+                    for rect in self.color_rects:
+                        if rect.get_point_collide(mous_pos) and rect.get_color() == self.actual_color:
+                            self.score += 1
+                            rect.kill()
+                            del self.color_rects[x]
+                        x += 1
 
             screen.fill((250,250,250))
             #rects.update(screen)
             for rect in self.color_rects:
                 rect.update(screen)
-                print(rect.get_colorkey())
             self.text_surface = self.my_font.render(f"{str(self.score)}", False, (0, 0, 0))
             screen.blit(self.text_surface, (width/2,120))
             self.color_rect.update(screen)
