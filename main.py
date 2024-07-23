@@ -40,8 +40,8 @@ class game():
                     counter = 0
             x = 0
             for rect in self.color_rects:
-                if rect.get_pos()[0] >= width/2-200 and rect.get_pos()[0] <= width/2+200 and rect.get_pos()[1] <= height-120:
-                    print("dead",rect.get_pos)
+                if rect.get_pos()[0] >= width/2-200 and rect.get_pos()[0] <= width/2+200 and rect.get_pos()[1] >= height-120:
+                    print("dead",rect.get_pos())
                     self.running = False
                 if rect.get_pos()[1] <= height:
                     rect.change_position(0,self.gravity)
