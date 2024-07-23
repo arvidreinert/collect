@@ -66,6 +66,8 @@ class game():
                             self.score -= 1
                             self.actual_color = self.make_random_base_color()
                             self.color_rect.fill_rect_with_color(self.actual_color)
+                            pygame.mixer.Channel(0).play(pygame.mixer.Sound("teleport.mp3"))
+                            pygame.mixer.Channel(0).set_volume(3)
                     x = 0
                     for rect in self.color_rects:
                         if rect.get_point_collide(mous_pos) and rect.get_color() == self.actual_color:
@@ -78,11 +80,11 @@ class game():
                             self.running = False
                         x += 1
 
-            screen.fill((250,250,250))
+            screen.fill((0,0,0))
             #rects.update(screen)
             for rect in self.color_rects:
                 rect.update(screen)
-            self.text_surface = self.my_font.render(f"{str(self.score)}", False, (0, 0, 0))
+            self.text_surface = self.my_font.render(f"{str(self.score)}", False, (250, 250, 250))
             screen.blit(self.text_surface, (width/2,120))
             self.color_rect.update(screen)
             pygame.display.update()
@@ -101,6 +103,8 @@ class game():
                 if event.type == pygame.QUIT:
                     sys.exit()
                 if event.type == pygame.MOUSEBUTTONDOWN:
+                    pygame.mixer.Channel(0).play(pygame.mixer.Sound("notificati.mp3"))
+                    pygame.mixer.Channel(0).set_volume(2)
                     pressed = True
                     x = game()
                     x.run_game()
