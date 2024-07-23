@@ -45,7 +45,6 @@ class game():
             x = 0
             for rect in self.color_rects:
                 if rect.get_pos()[0] >= width/2-200 and rect.get_pos()[0] <= width/2+200 and rect.get_pos()[1] >= height-220:
-                    print("dead",rect.get_pos())
                     self.running = False
                 if rect.get_pos()[1] <= height:
                     rect.change_position(0,self.gravity)
@@ -75,6 +74,8 @@ class game():
                             pygame.mixer.Channel(0).set_volume(2)
                             rect.kill()
                             del self.color_rects[x]
+                        elif rect.get_point_collide(mous_pos) and rect.get_color() != self.actual_color:
+                            self.running = False
                         x += 1
 
             screen.fill((250,250,250))
@@ -85,6 +86,24 @@ class game():
             screen.blit(self.text_surface, (width/2,120))
             self.color_rect.update(screen)
             pygame.display.update()
+
+        for rect in self.color_rects:
+            rect.kill()
+            del self.color_rects[self.color_rects.index(rect)]
+
+        pressed = False
+        while pressed == False:
+            screen.fill((250,250,250))
+            self.text_surface = self.my_font.render(f"your score was {self.score} click to retry", False, (0, 0, 0))
+            screen.blit(self.text_surface, (500,height/2))
+            pygame.display.update()
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    sys.exit()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    pressed = True
+                    x = game()
+                    x.run_game()
 
 x = game()
 x.run_game()
